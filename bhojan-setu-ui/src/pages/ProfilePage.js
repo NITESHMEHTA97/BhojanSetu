@@ -1,6 +1,22 @@
 import React from 'react';
-import { Container, Typography, Avatar, Paper, Box, Tabs, Tab, Button } from '@mui/material';
-import { Person, History, Favorite, Settings, Restaurant } from '@mui/icons-material';
+import { 
+  Container, 
+  Typography, 
+  Avatar, 
+  Paper, 
+  Box, 
+  Tabs, 
+  Tab, 
+  Button,
+  Divider
+} from '@mui/material';
+import { Person, History, Favorite, Settings, ExitToApp } from '@mui/icons-material';
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import DialogActions from '@mui/material/DialogActions';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -24,22 +40,36 @@ function TabPanel(props) {
 
 export default function ProfilePage() {
   const [value, setValue] = React.useState(0);
+  const navigate = useNavigate();
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
+  };
+
+  const handleSignOut = () => {
+    // In a real app, you would:
+    // 1. Clear authentication tokens from storage
+    // 2. Clear user data from context/redux
+    // 3. Call backend API to invalidate session if needed
+    console.log('User signed out');
+    
+    // Redirect to login page
+    navigate('/');
   };
 
   const user = {
     name: 'Green Catering Co.',
     role: 'Food Caterer',
     email: 'contact@greencatering.com',
-    avatar: '/caterer-avatar.jpg',
+    avatar: '/images/avatar.jpg',
     stats: {
       donations: 24,
       saved: '1,245 kg',
       rating: 4.5
     }
   };
+
+  const [openDialog, setOpenDialog] = useState(false);
 
   return (
     <Container maxWidth="sm">
@@ -66,9 +96,26 @@ export default function ProfilePage() {
           </Box>
         </Box>
         
-        <Button variant="outlined" sx={{ mb: 3 }}>
+        <Button variant="outlined" sx={{ mb: 2 }}>
           Edit Profile
         </Button>
+
+        {/* Sign Out Button */}
+        <Button 
+          onClick={() => setOpenDialog(true)}>
+           Sign Out
+        </Button>
+
+        <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
+          <DialogTitle>Confirm Sign Out</DialogTitle>
+          <DialogContent>
+            <Typography>Are you sure you want to sign out?</Typography>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => setOpenDialog(false)}>Cancel</Button>
+            <Button onClick={handleSignOut} color="error">Sign Out</Button>
+          </DialogActions>
+        </Dialog>
       </Box>
 
       <Paper elevation={3}>
@@ -93,6 +140,16 @@ export default function ProfilePage() {
         
         <TabPanel value={value} index={2}>
           <Typography>Account settings and preferences</Typography>
+          <Divider sx={{ my: 2 }} />
+          <Button 
+            variant="outlined" 
+            color="error" 
+            startIcon={<ExitToApp />}
+            onClick={handleSignOut}
+            sx={{ mt: 2 }}
+          >
+            Sign Out
+          </Button>
         </TabPanel>
       </Paper>
     </Container>

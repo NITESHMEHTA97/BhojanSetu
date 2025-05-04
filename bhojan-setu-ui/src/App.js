@@ -10,6 +10,8 @@ import FoodDetailPage from './pages/FoodDetailPage';
 import ProfilePage from './pages/ProfilePage';
 import AuthPage from './pages/AuthPage';
 import BottomNav from './components/BottomNav';
+import LoginPage from './pages/LoginPage';
+import SignupPage from './pages/SignupPage';
 
 const theme = createTheme({
   palette: {
@@ -32,7 +34,9 @@ function App() {
       <Router>
         <div style={{ paddingBottom: '56px' }}> {/* Space for bottom nav */}
           <Routes>
-            <Route path="/" element={<HomePage />} />
+            <Route path="/home" element={<HomePage />} />
+            <Route path="/" element={<LoginPage />} />
+            <Route path="/signup" element={<SignupPage />} />
             <Route path="/post" element={<PostFoodPage />} />
             <Route path="/browse" element={<BrowseFoodPage />} />
             <Route path="/food/:id" element={<FoodDetailPage />} />

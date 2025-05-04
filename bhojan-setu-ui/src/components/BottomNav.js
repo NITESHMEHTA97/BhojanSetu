@@ -24,11 +24,11 @@ export default function BottomNav() {
         onChange={(event, newValue) => {
           setValue(newValue);
           switch(newValue) {
-            case 0: navigate('/'); break;
+            case 0: navigate('/home'); break;
             case 1: navigate('/post'); break;
             case 2: navigate('/browse'); break;
             case 3: navigate('/profile'); break;
-            default: navigate('/');
+            default: navigate('/home');
           }
         }}
       >
