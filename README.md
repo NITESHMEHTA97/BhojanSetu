@@ -48,4 +48,4 @@
     *(Optional)*
 
 - **SSO for login**  
-    *(Optional)*
+    *(Optional)*s
